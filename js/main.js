@@ -1,24 +1,36 @@
 // 70. Berilgan objectdagi barcha string qiymatlarni toping va birlashtiring.
 
-function concatStrings(obj) {
-    // Code here
+function concatStrings(obj1) {
+    let result = '';
+
+    function recurse(current) {
+        for (let key in current) {
+            if (typeof current[key] === 'object' && current[key] !== null) {
+                recurse(current[key]);
+            } else if (typeof current[key] === 'string') {
+                result += current[key];
+            }
+        }
+    }
+
+    recurse(obj1);
+    return result;
 }
 
-// Test case
-// const obj = {
-//     a: "Hello",
-//     b: {
-//         c: " ",
-//         d: {
-//             e: "World",
-//             f: {
-//                 g: "!"
-//             }
-//         }
-//     }
-// };
-// console.log(concatStrings(obj)); // Output: "Hello World!"
+const obj = {
+    a: "Hello",
+    b: {
+        c: " ",
+        d: {
+            e: "World",
+            f: {
+                g: "!"
+            }
+        }
+    }
+};
 
+console.log(concatStrings(obj1)); // Output: "Hello World!"
 
 
 
@@ -26,10 +38,11 @@ function concatStrings(obj) {
 
 
 function sortByLength(s) {
-    // Code here
+    let arr = s.split(" ")
+    arr.sort((a ,b) => a.length - b.length)
+    return arr
 }
 
-// Test case
 // console.log(sortByLength("short longest medium")); // Output: "short medium longest"
 // console.log(sortByLength("a quick brown fox")); // Output: "a fox quick brown"
 
@@ -61,7 +74,9 @@ const obj = {
 // 73. Berilgan stringdagi eng uzun so'zni toping.
 
 function longestWord(s) {
-    // Code here
+    let arr = s.split(" ")
+    arr.sort((a,b) => b.length - a.length)
+    return arr[0]
 }
 
 // Test case
@@ -75,9 +90,8 @@ function longestWord(s) {
 
 
 function reverseUpperCase(s) {
-    // Code here
+    return s.toUpperCase().split("").reverse().join("")
 }
-
 // Test case
 // console.log(reverseUpperCase("Hello World")); // Output: "DLROW OLLEH"
 // console.log(reverseUpperCase("JavaScript")); // Output: "TPIRCASAVAJ"
@@ -86,7 +100,14 @@ function reverseUpperCase(s) {
 // 75. Berilgan stringdagi barcha raqamlarni toping va alohida arrayda qaytaring.
 
 function extractNumbers(s) {
-    // Code here
+    let arr = s.split(' ')
+    let res = []
+    for (let i = 0; i < arr.length; i++) {
+        if (+arr[i] > 0) {
+            res.push(+arr[i])
+        }
+    }
+    return res
 }
 
 // Test case
@@ -145,23 +166,17 @@ function invertObject(obj) {
 
 
 function isPalindrome(s) {
-    let newArr = s.toLowerCase().split('')
-    var str = newArr.join();
-    document.write("str : " + str );
-
-    var str = newArr.join(",");
-    document.write("<br />str : " + str );
-    console.log(str)
-    // newArr.forEach(element => {
-    //     console.log(element)
-    //     // if (element === '') {
-    //     //     console.log(element)
-    //     // }
-    // });
+    let str = s.toLowerCase().replaceAll(',', "").split(" ").join("")
+    let reveseStr = str.split("").reverse().join('')
+    if (str === reveseStr) {
+        return true
+    } else {
+        return false
+    }
 }
-
-console.log(isPalindrome("A man, a plan, a canal, Panama")); // Output: true
+// console.log(isPalindrome("A man, a plan, a canal, Panama")); // Output: true
 // console.log(isPalindrome("Hello, World!")); // Output: false
+
 
 
 // 79. Berilgan objectdagi barcha raqamli qiymatlarning yig'indisini hisoblang.
@@ -192,20 +207,14 @@ function sumNumbers(obj) {
 
 
 function capitalizeWords(s) {
-    let newStr = s.split(' ')
-    let result = []
-    console.log(newStr)
-    for (const item of newStr) {
-        result.push([[item[0].toUpperCase()],[item.slice(1,)]])
-    }
-
-    // newStr.forEach(element => {
-        // console.log(element[0].toUpperCase())
-        // console.log(element.slice(0,2))
-    // });
-    return result
+    let arr = s.split(" ");
+    let result = arr.map(element => {
+        return element.charAt(0).toUpperCase() + element.slice(1);
+    });
+    return result.join(" ");
 }
 
 // Test case
 // console.log(capitalizeWords("hello world from javascript")); // Output: "Hello World From Javascript"
 // console.log(capitalizeWords("this is a test")); // Output: "This Is A Test"
+
