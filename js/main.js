@@ -118,25 +118,44 @@ function extractNumbers(s) {
 // 76. Berilgan objectdagi barcha qiymatlarning turlarini toping va ro'yxat (array) sifatida qaytaring.
 
 function valueTypes(obj) {
-    // Code here
+    let types = [];
+
+    function recurse(current) {
+        for (let key in current) {
+            if (current.hasOwnProperty(key)) {
+                let value = current[key];
+                let type = Array.isArray(value) ? 'object' : typeof value;
+
+                types.push(type);
+
+                if (type === 'object' && value !== null) {
+                    recurse(value);
+                }
+            }
+        }
+    }
+
+    recurse(obj);
+    return types;
 }
 
 // Test case
-// const obj = {
-//     a: 1,
-//     b: "string",
-//     c: true,
-//     d: {
-//         e: 3.14,
-//         f: null,
-//         g: {
-//             h: undefined,
-//             i: [1, 2, 3]
-//         }
-//     }
-// };
-// console.log(valueTypes(obj));
-// Output: ["number", "string", "boolean", "number", "object", "undefined", "object"]
+const obj = {
+    a: 1,
+    b: "string",
+    c: true,
+    d: {
+        e: 3.14,
+        f: null,
+        g: {
+            h: undefined,
+            i: [1, 2, 3]
+        }
+    }
+};
+
+console.log(valueTypes(obj));
+// Output: ["number", "string", "boolean", "number", "object", "object", "undefined", "object"]
 
 
 // 77. Berilgan objectdagi barcha kalitlarni ularning qiymatlari bilan almashtiring. Agar qiymatlari takrorlansa, oxirgi qiymatni qabul qiling.
